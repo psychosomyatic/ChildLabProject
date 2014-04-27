@@ -230,8 +230,8 @@ function updateChartHigh(data_string){
 	
 function upChH(){
 	
-	$(function () {
-        $('#container').highcharts({
+	$(document).ready(function() {
+	chart = new Highcharts.Chart({
             chart: {
                 type: 'column'
             },
@@ -305,7 +305,7 @@ function upChH(){
 
 
 
-  <body onload=upChH();>
+  <body onload="upChH();">
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
