@@ -1,0 +1,121 @@
+
+<html>
+<head>
+<meta name = "viewport" content = "width = device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">	
+<script src="http://code.google.com/apis/gears/gears_init.js" type="text/javascript" charset="utf-8"></script>
+<script src="geo.js" type="text/javascript" charset="utf-8"></script>
+<script src="geo_position_js_simulator.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+<script>
+
+//Links
+//view-source:http://www.merkwelt.com/people/stan/geo_js/sample_with_map_and_simulated_user.html
+//http://npdoty.name/location/#developer
+//http://code.google.com/p/geo-location-javascript/wiki/JavaScriptAPI
+//http://code.google.com/p/geo-location-javascript/
+//http://www.eldeto.com/content/using-geo-location-your-mobile-website
+//https://play.google.com/store/apps/details?id=net.nakvic.dromoris
+//http://www.codeproject.com/Articles/209616/A-simple-GPS-based-application-to-record-current-l
+//https://developers.google.com/maps/tutorials/fundamentals/adding-a-google-map
+//http://stackoverflow.com/questions/20335578/mark-multiple-locations-in-google-maps
+//https://developers.google.com/maps/tutorials/customizing/
+//ML- http://archive.ics.uci.edu/ml/datasets.html
+//Druva - hacker earth
+
+var last_position=null;
+locations=new Array();
+	
+function initialize_map()
+{
+    var myOptions = {
+	      zoom: 15,
+	      mapTypeControl: true,
+	      mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+	      navigationControl: true,
+	      navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+	      mapTypeId: google.maps.MapTypeId.ROADMAP     
+	    }	
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+}
+function initialize()
+{
+	if(!geo_position_js.init())
+	{
+		document.getElementById('current').innerHTML="Functionality not available";
+	}
+	
+	retrieve();
+	//setInterval(retrieve,10000);
+}
+
+function retrieve()
+{
+	document.getElementById('current').innerHTML="Receiving...";
+	geo_position_js.getCurrentPosition(show_position,function(){document.getElementById('current').innerHTML="Couldn't get location"});
+	
+}
+
+function show_position(p)
+{	
+	last_position=p;
+	alert("inside show"+p.coords.latitude);
+	document.getElementById('current').innerHTML="latitude="+p.coords.latitude+" longitude="+p.coords.longitude;
+	var pos=new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
+	map.setCenter(pos);
+
+	var infowindow = new google.maps.InfoWindow({
+	    content: "<strong>Add notes about the place to sync. <br />For eg.: Name: Bharat Kumar <br> Age: 5 years <br> Status: Malnourished (SAM)<br>FollowUp on: 11/5 </strong>"
+	});
+
+	var marker = new google.maps.Marker({
+	    position: pos,
+	    map: map,
+	    title:"You are here"
+	});
+
+	google.maps.event.addListener(marker, 'click', function() {
+	  infowindow.open(map,marker);
+	});
+	
+}
+
+
+	
+	function sim_loc(){
+		//geo_position_js.getCurrentPosition(show_position,function(){document.getElementById('current').innerHTML="Couldn't get location"});
+		geo_sim_loc();
+		locations.push({ coords:{latitude:last_position.coords.latitude,longitude:last_position.coords.longitude},duration:1000 });	
+		locations.push({ coords:{latitude:12.9236453,longitude:77.63758856},duration:1000 });		
+		geo_position_js_simulator.init(locations);
+		for(var i=0;i<locations.length;i++){
+			alert(locations.length);
+			show_position(locations[i]);
+		}
+		//if(last_position)
+			alert("last_pos"+last_position.coords.latitude);
+	}
+
+</script >
+<style>
+	body {font-family: Helvetica;font-size:11pt;padding:10px;margin:10px}
+	#title {background-color:#e22640;padding:5px;}
+	#current {font-size:10pt;padding:5px;}	
+</style>
+</head>
+<body onload="initialize_map();initialize();">
+
+	<div id="title"><b>Path Tracker with Notes - Facilitate NGO Field Trips</b></div>
+	<br />
+	<p>
+	This application is being built to leverage technology to track field trips and sync notes among volunteers within the NGOs.
+	This will also help NGOs showcase their field trips, results and findings. With more features in the future, this can be used 
+	as a syncing mechanism for the people working with the NGO as well as the community members to report and keep track of 
+	updates in the area under surveillance in real time.
+	</p>
+	<div id="title">Show Position In Map (Simulated)</div>
+	<div id="current">Initializing...</div>
+	<input type="button" value="click here" onclick="sim_loc();"><input/>
+	<div id="map_canvas" style="width:620px; height:650px"> </div>
+</body>
+</html>
