@@ -1,4 +1,3 @@
-
 <html>
 <head>
 <meta name = "viewport" content = "width = device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">	
@@ -59,7 +58,7 @@ function retrieve()
 function show_position(p)
 {	
 	last_position=p;
-	alert("inside show"+p.coords.latitude);
+	//alert("inside show"+p.coords.latitude);
 	document.getElementById('current').innerHTML="latitude="+p.coords.latitude+" longitude="+p.coords.longitude;
 	var pos=new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
 	map.setCenter(pos);
@@ -89,11 +88,11 @@ function show_position(p)
 		locations.push({ coords:{latitude:12.9236453,longitude:77.63758856},duration:1000 });		
 		geo_position_js_simulator.init(locations);
 		for(var i=0;i<locations.length;i++){
-			alert(locations.length);
+			//alert(locations.length);
 			show_position(locations[i]);
 		}
 		//if(last_position)
-			alert("last_pos"+last_position.coords.latitude);
+			//alert("last_pos"+last_position.coords.latitude);
 	}
 
 </script >
