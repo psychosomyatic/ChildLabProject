@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <meta name = "viewport" content = "width = device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">	
@@ -24,6 +25,8 @@
 
 var last_position=null;
 locations=new Array();
+var x = 12.9236453;
+var y = 77.63758856;
 	
 function initialize_map()
 {
@@ -84,8 +87,10 @@ function show_position(p)
 	function sim_loc(){
 		//geo_position_js.getCurrentPosition(show_position,function(){document.getElementById('current').innerHTML="Couldn't get location"});
 		geo_sim_loc();
+		x = x + 0.006;
+		y = y + 0.007;
 		locations.push({ coords:{latitude:last_position.coords.latitude,longitude:last_position.coords.longitude},duration:1000 });	
-		locations.push({ coords:{latitude:12.9236453,longitude:77.63758856},duration:1000 });		
+		locations.push({ coords:{latitude:x,longitude:y},duration:1000 });		
 		geo_position_js_simulator.init(locations);
 		for(var i=0;i<locations.length;i++){
 			//alert(locations.length);
