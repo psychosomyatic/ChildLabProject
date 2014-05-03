@@ -87,7 +87,7 @@ function show_position(p)
 	function sim_loc(){
 		//geo_position_js.getCurrentPosition(show_position,function(){document.getElementById('current').innerHTML="Couldn't get location"});
 		geo_sim_loc();
-		x = x + 0.006;
+		x = x - 0.006;
 		y = y + 0.007;
 		locations.push({ coords:{latitude:last_position.coords.latitude,longitude:last_position.coords.longitude},duration:1000 });	
 		locations.push({ coords:{latitude:x,longitude:y},duration:1000 });		
