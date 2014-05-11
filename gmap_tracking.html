@@ -103,7 +103,7 @@ function show_position(p)
 	function save_text(){
 		var fso = new ActiveXObject("Scripting.FileSystemObject");
 		// 2=overwrite, true=create if not exist, 0 = ASCII
-		varFileObject = fso.OpenTextFile("/storage/emulator/0/cry_data/f1.txt", 2, true,0);
+		varFileObject = fso.OpenTextFile("f1.txt", 2, true,0);
 		varFileObject.write("File handling in Javascript");
 		varFileObject.close();
 	}
