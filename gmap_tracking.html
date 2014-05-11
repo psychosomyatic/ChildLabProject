@@ -99,6 +99,14 @@ function show_position(p)
 		//if(last_position)
 			//alert("last_pos"+last_position.coords.latitude);
 	}
+	
+	function save_text(){
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+		// 2=overwrite, true=create if not exist, 0 = ASCII
+		varFileObject = fso.OpenTextFile("/storage/emulator/0/cry_data/f1.txt", 2, true,0);
+		varFileObject.write("File handling in Javascript");
+		varFileObject.close();
+	}
 
 </script >
 <style>
@@ -120,7 +128,9 @@ function show_position(p)
 	<div id="title">Show Position In Map (Simulated)</div>
 	<div id="current">Initializing...</div>
 	Zoom out and Click here to see previous locations: <input type="button" value="click here" onclick="sim_loc();"><input/>
+	<input type="button" value="click to save txt" onclick="save_text();"><input/>
 	<br> <br> Click on location marker to add notes. 
+	
 	<div id="map_canvas" style="width:620px; height:650px"> </div>
 </body>
 </html>
